@@ -9,7 +9,6 @@
 # http://structure101.com/help/java/build/#sonar/sonar.html
 
 FROM alpine:3.4
-MAINTAINER haolunzhang@yirendai.com
 
 ENV PLUGINS_DIR /opt/sonarqube/extensions/plugins
 
