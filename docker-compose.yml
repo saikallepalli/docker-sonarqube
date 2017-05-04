@@ -16,7 +16,6 @@ services:
     build: sonarqube-plugins
     image: ${DOCKER_REGISTRY:-registry.docker.local}/sonarqube-plugins:6.2-alpine
     container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}-plugins
-    restart: never
   sonarqube:
     build: sonarqube
     image: ${DOCKER_REGISTRY:-registry.docker.local}/sonarqube:6.2-alpine
