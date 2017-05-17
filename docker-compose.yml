@@ -23,7 +23,7 @@ services:
     container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}
     hostname: ${SONARCUBE_HOSTNAME:-local-sonarqube}
     ports:
-    - "9000:9000"
+    - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
     volumes:
     #- sonarqube_conf:/opt/sonarqube/conf
