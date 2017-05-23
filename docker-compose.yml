@@ -14,11 +14,11 @@ services:
   # data container provide plugins
   sonarqube-plugins:
     build: sonarqube-plugins
-    image: ${DOCKER_REGISTRY:-registry.docker.local}/sonarqube-plugins:6.2-alpine
+    image: home1oss/sonarqube-plugins:6.2-alpine
     container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}-plugins
   sonarqube:
     build: sonarqube
-    image: ${DOCKER_REGISTRY:-registry.docker.local}/sonarqube:6.2-alpine
+    image: home1oss/sonarqube:6.2-alpine
     restart: always
     container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}
     hostname: ${SONARCUBE_HOSTNAME:-local-sonarqube}
