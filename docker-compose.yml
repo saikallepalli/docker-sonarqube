@@ -34,7 +34,7 @@ services:
     - sonarqube-plugins
     environment:
     # local-postgresql
-    - SONARQUBE_JDBC_URL=jdbc:postgresql://local-postgresql:5432/sonar
+    - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_PORT:-5432}/sonar
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
     # linked mysql
@@ -44,7 +44,7 @@ services:
 #    links:
 #    - sonarqube-linked-db:sonarqube-linked-db
     external_links:
-    - local-postgresql:local-postgresql
+    - ${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_HOSTNAME:-postgresql.local}
 #  sonarqube-linked-db:
 #    build:
 #      context: ../mysql
