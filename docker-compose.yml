@@ -16,6 +16,8 @@ services:
     build: sonarqube-plugins
     image: ${DOCKER_REGISTRY:-registry.docker.local}/sonarqube-plugins:6.2-alpine
     container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}-plugins
+    volumes:
+    - sonarqube_plugins_data:/opt/sonarqube/extensions/plugins
   sonarqube:
     build: sonarqube
     image: ${DOCKER_REGISTRY:-registry.docker.local}/sonarqube:6.2-alpine
@@ -64,6 +66,7 @@ volumes:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_bundled-plugins:
+  sonarqube_plugins_data:
 
 networks:
   default:
