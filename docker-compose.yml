@@ -16,6 +16,8 @@ services:
     build: sonarqube-plugins
     image: home1oss/sonarqube-plugins:6.2-alpine
     container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}-plugins
+    volumes:
+    - sonarqube_plugins_data:/opt/sonarqube/extensions/plugins
   sonarqube:
     build: sonarqube
     image: home1oss/sonarqube:6.2-alpine
@@ -23,7 +25,7 @@ services:
     container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}
     hostname: ${SONARCUBE_HOSTNAME:-local-sonarqube}
     ports:
-    - "9000:9000"
+    - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
     volumes:
     #- sonarqube_conf:/opt/sonarqube/conf
@@ -34,7 +36,7 @@ services:
     - sonarqube-plugins
     environment:
     # local-postgresql
-    - SONARQUBE_JDBC_URL=jdbc:postgresql://local-postgresql:5432/sonar
+    - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_PORT:-5432}/sonar
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
     # linked mysql
@@ -44,7 +46,7 @@ services:
 #    links:
 #    - sonarqube-linked-db:sonarqube-linked-db
     external_links:
-    - local-postgresql:local-postgresql
+    - ${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_HOSTNAME:-postgresql.local}
 #  sonarqube-linked-db:
 #    build:
 #      context: ../mysql
@@ -64,6 +66,7 @@ volumes:
   sonarqube_data:
   sonarqube_extensions:
   sonarqube_bundled-plugins:
+  sonarqube_plugins_data:
 
 networks:
   default:
