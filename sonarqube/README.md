@@ -1,8 +1,9 @@
-# docker-sonarqube
 
-Sonarqube docker image
+# sonarqube
 
 ## Usage
+
+Setup a database instance if not use embedded H2 database. 
 
     docker-compose up -d
 

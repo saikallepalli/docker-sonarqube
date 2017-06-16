@@ -1,29 +1,19 @@
 
-# see: https://hub.docker.com/_/sonarqube/
-# see: https://github.com/SonarSource/docker-sonarqube/blob/master/recipes.md
-# http://admin:admin@local-sonarqube:9000
-
-# see: http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven
-# Embedded H2 database
-# mvn sonar:sonar -Dsonar.host.url=http://local-sonarqube:9000 -Dsonar.jdbc.url="jdbc:h2:tcp://local-sonarqube/sonar"
-# local-postgresql or linked mysql database
-# mvn sonar:sonar -Dsonar.host.url=http://local-sonarqube:9000
-
 version: '2.1'
 services:
   # data container provide plugins
   sonarqube-plugins:
     build: sonarqube-plugins
     image: home1oss/sonarqube-plugins:6.2-alpine
-    container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}-plugins
+    container_name: ${SONARCUBE_HOSTNAME:-sonarqube.local}-plugins
     volumes:
     - sonarqube_plugins_data:/opt/sonarqube/extensions/plugins
   sonarqube:
     build: sonarqube
     image: home1oss/sonarqube:6.2-alpine
     restart: always
-    container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}
-    hostname: ${SONARCUBE_HOSTNAME:-local-sonarqube}
+    container_name: ${SONARCUBE_HOSTNAME:-sonarqube.local}
+    hostname: ${SONARCUBE_HOSTNAME:-sonarqube.local}
     ports:
     - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
@@ -35,7 +25,7 @@ services:
     volumes_from:
     - sonarqube-plugins
     environment:
-    # local-postgresql
+    # postgresql.local
     - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_PORT:-5432}/sonar
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
@@ -54,7 +44,7 @@ services:
 #    image: ${DOCKER_REGISTRY:-registry.docker.local}/mysql:5.7.17
 #    restart: always
 #    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
-#    container_name: ${SONARCUBE_HOSTNAME:-local-sonarqube}-linked-db
+#    container_name: ${SONARCUBE_HOSTNAME:-sonarqube.local}-linked-db
 #    volumes:
 #    - sonarqube_linked_db:/var/lib/mysql
 #    environment:
