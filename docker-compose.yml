@@ -23,7 +23,7 @@ services:
     #- sonarqube_extensions:/opt/sonarqube/extensions
     #- sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
     volumes_from:
-    - plugins-${SONARCUBE_HOSTNAME:-sonarqube.local}
+    - sonarqube-plugins
     #external_links:
     #- ${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_HOSTNAME:-postgresql.local}
     environment:
