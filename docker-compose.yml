@@ -5,9 +5,9 @@ services:
   sonarqube-plugins:
     build: sonarqube-plugins
     image: home1oss/sonarqube-plugins:6.2-alpine
-    container_name: ${SONARCUBE_HOSTNAME:-sonarqube.local}-plugins
+    container_name: plugins-${SONARCUBE_HOSTNAME:-sonarqube.local}
     volumes:
-    - sonarqube_plugins_data:/opt/sonarqube/extensions/plugins
+    - volume-sonarqube_plugins_data:/opt/sonarqube/extensions/plugins
   sonarqube:
     build: sonarqube
     image: home1oss/sonarqube:6.2-alpine
@@ -19,24 +19,24 @@ services:
     #- "9092:9092"
     volumes:
     #- sonarqube_conf:/opt/sonarqube/conf
-    - sonarqube_data:/opt/sonarqube/data
+    - volume-sonarqube_data:/opt/sonarqube/data
     #- sonarqube_extensions:/opt/sonarqube/extensions
     #- sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
     volumes_from:
-    - sonarqube-plugins
+    - plugins-${SONARCUBE_HOSTNAME:-sonarqube.local}
+    #external_links:
+    #- ${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_HOSTNAME:-postgresql.local}
     environment:
     # postgresql.local
     - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_PORT:-5432}/sonar
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
-    # linked mysql
+#    # linked mysql
 #    - SONARQUBE_JDBC_URL=jdbc:mysql://sonarqube-linked-db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&createDatabaseIfNotExist=true
 #    - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-root}
 #    - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-root}
 #    links:
 #    - sonarqube-linked-db:sonarqube-linked-db
-    external_links:
-    - ${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_HOSTNAME:-postgresql.local}
 #  sonarqube-linked-db:
 #    build:
 #      context: ../mysql
@@ -46,17 +46,17 @@ services:
 #    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
 #    container_name: ${SONARCUBE_HOSTNAME:-sonarqube.local}-linked-db
 #    volumes:
-#    - sonarqube_linked_db:/var/lib/mysql
+#    - volume-sonarqube_linked_db:/var/lib/mysql
 #    environment:
 #    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
 
 volumes:
-#  sonarqube_linked_db:
-  sonarqube_conf:
-  sonarqube_data:
-  sonarqube_extensions:
-  sonarqube_bundled-plugins:
-  sonarqube_plugins_data:
+  volume-sonarqube_conf:
+  volume-sonarqube_data:
+  volume-sonarqube_extensions:
+  volume-sonarqube_bundled-plugins:
+  volume-sonarqube_plugins_data:
+#  volume-sonarqube_linked_db:
 
 networks:
   default:
