@@ -5,15 +5,15 @@ services:
   sonarqube-plugins:
     build: sonarqube-plugins
     image: home1oss/sonarqube-plugins:6.2-alpine
-    container_name: plugins-${SONARCUBE_HOSTNAME:-sonarqube.local}
+    container_name: plugins-${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}
     volumes:
     - volume-sonarqube_plugins_data:/opt/sonarqube/extensions/plugins
   sonarqube:
     build: sonarqube
     image: home1oss/sonarqube:6.2-alpine
     restart: always
-    container_name: ${SONARCUBE_HOSTNAME:-sonarqube.local}
-    hostname: ${SONARCUBE_HOSTNAME:-sonarqube.local}
+    container_name: ${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}
+    hostname: ${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}
     ports:
     - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
@@ -25,10 +25,10 @@ services:
     volumes_from:
     - sonarqube-plugins
     #external_links:
-    #- ${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_HOSTNAME:-postgresql.local}
+    #- ${POSTGRESQL_DOMAIN:-postgresql}.${INFRASTRUCTURE:-local}:${POSTGRESQL_DOMAIN:-postgresql}.${INFRASTRUCTURE:-local}
     environment:
     # postgresql.local
-    - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_HOSTNAME:-postgresql.local}:${POSTGRESQL_PORT:-5432}/sonar
+    - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_DOMAIN:-postgresql}.${INFRASTRUCTURE:-local}:${POSTGRESQL_PORT:-5432}/sonar
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
 #    # linked mysql
@@ -44,7 +44,7 @@ services:
 #    image: ${DOCKER_REGISTRY:-registry.docker.local}/mysql:5.7.17
 #    restart: always
 #    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
-#    container_name: ${SONARCUBE_HOSTNAME:-sonarqube.local}-linked-db
+#    container_name: ${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}-linked-db
 #    volumes:
 #    - volume-sonarqube_linked_db:/var/lib/mysql
 #    environment:
