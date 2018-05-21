@@ -27,10 +27,14 @@ services:
     #external_links:
     #- ${POSTGRESQL_DOMAIN:-postgresql}.${INFRASTRUCTURE:-local}:${POSTGRESQL_DOMAIN:-postgresql}.${INFRASTRUCTURE:-local}
     environment:
-    # postgresql.local
-    - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_DOMAIN:-postgresql}.${INFRASTRUCTURE:-local}:${POSTGRESQL_PORT:-5432}/sonar
+    # mysql.local
+    - SONARQUBE_JDBC_URL=jdbc:mysql://${MARIADB_DOMAIN:-mysql}.${INFRASTRUCTURE:-local}:${MARIADB_PORT:-3306}/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
+#    # postgresql.local
+#    - SONARQUBE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_DOMAIN:-postgresql}.${INFRASTRUCTURE:-local}:${POSTGRESQL_PORT:-5432}/sonar
+#    - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
+#    - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
 #    # linked mysql
 #    - SONARQUBE_JDBC_URL=jdbc:mysql://sonarqube-linked-db:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&createDatabaseIfNotExist=true
 #    - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-root}

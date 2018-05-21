@@ -23,6 +23,12 @@ Use Other database
 
 You can link a postgresql (recommended) or mysql database.
 
+Create database for sonarqube on mysql (mariadb not supported)
+
+`docker exec -it mysql.local mysql -u root -proot_pass -e 'CREATE DATABASE IF NOT EXISTS `sonar`; SHOW DATABASES;'`
+`docker exec -it mysql.local mysql -u root -proot_pass -e "CREATE USER 'sonar'@'%' IDENTIFIED BY 'sonar';"`
+`docker exec -it mysql.local mysql -u root -proot_pass -e "GRANT ALL PRIVILEGES ON sonar.* TO 'sonar'@'%'; FLUSH PRIVILEGES;"`
+
 Create database for sonarqube on postgresql
 
 see: https://github.com/sameersbn/docker-postgresql/issues/58
