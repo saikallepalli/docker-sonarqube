@@ -2,6 +2,4 @@
 
 Sonarqube docker image
 
-```
-docker-compose build
-```
+`docker-compose pull` or `docker-compose build`
