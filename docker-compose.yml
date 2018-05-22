@@ -1,5 +1,5 @@
 
-version: '2.1'
+version: '2.4'
 services:
   # data container provide plugins
   sonarqube-plugins:
@@ -64,5 +64,5 @@ volumes:
 
 networks:
   default:
-    external:
-      name: oss-network
+    external: true
+    name: oss-network
