@@ -4,13 +4,13 @@ services:
   # data container provide plugins
   sonarqube-plugins:
     build: sonarqube-plugins
-    image: home1oss/sonarqube-plugins:6.7.3-alpine
+    image: cirepo/sonarqube-plugins:6.7.3-alpine
     container_name: plugins-${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}
     volumes:
     - volume-sonarqube_plugins_data:/opt/sonarqube/extensions/plugins
   sonarqube:
     build: sonarqube
-    image: home1oss/sonarqube:6.7.3-alpine
+    image: cirepo/sonarqube:6.7.3-alpine
     restart: always
     container_name: ${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}
     hostname: ${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}
