@@ -45,7 +45,7 @@ services:
 #    build:
 #      context: ../mysql
 #      dockerfile: Dockerfile_5_7_17
-#    image: ${DOCKER_REGISTRY:-registry.docker.local}/mysql:5.7.17
+#    image: ${DOCKER_REGISTRY:-nexus3.local:5000}/mysql:5.7.17
 #    restart: always
 #    command: [--character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
 #    container_name: ${SONARCUBE_DOMAIN:-sonarqube}.${INFRASTRUCTURE:-local}-linked-db
