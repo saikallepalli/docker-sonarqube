@@ -17,8 +17,8 @@ services:
     hostname: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-local}
     networks:
       local-network:
-        ipv4_address: 172.16.238.135
-        ipv6_address: 2001:3984:3989::135
+        ipv4_address: 172.16.238.67
+        ipv6_address: 2001:3984:3989::67
     ports:
     - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
