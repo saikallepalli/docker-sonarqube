@@ -2,23 +2,20 @@
 version: '2.1'
 services:
   # data container provide plugins
-  sonarqube-plugins-develop:
+  sonarqube-plugins:
     extends:
       file: docker-compose-base.yml
       service: base-sonarqube-plugins
-    container_name: ${INSTANCE_NAME:-sonarqube}-plugins.${INSTANCE_DOMAIN:-local}
+    container_name: ${INSTANCE_NAME:-sonarqube}-plugins.${INSTANCE_DOMAIN:-internal}
     volumes:
     - plugins:/opt/sonarqube/extensions/plugins
-  sonarqube-develop:
+  sonarqube:
     extends:
       file: docker-compose-base.yml
       service: base-sonarqube
-    container_name: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-local}
-    hostname: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-local}
-    networks:
-      local-network:
-        ipv4_address: 172.16.238.135
-        ipv6_address: 2001:3984:3989::135
+    container_name: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-internal}
+    hostname: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-internal}
+    network_mode: bridge
     ports:
     - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
@@ -28,20 +25,7 @@ services:
     #- extensions:/opt/sonarqube/extensions
     #- bundled-plugins:/opt/sonarqube/lib/bundled-plugins
     volumes_from:
-    - sonarqube-plugins-develop
-    #external_links:
-    #- ${POSTGRESQL_NAME:-postgresql}.${INSTANCE_DOMAIN:-local}:${POSTGRESQL_NAME:-postgresql}.${INSTANCE_DOMAIN:-local}
-
-networks:
-  local-network:
-    external: true
-    driver: bridge
-    enable_ipv6: true
-    ipam:
-      driver: default
-      config:
-      - subnet: 172.16.238.0/24
-      - subnet: 2001:3984:3989::/64
+    - sonarqube-plugins
 
 volumes:
   data:

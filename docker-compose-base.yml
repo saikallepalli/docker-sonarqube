@@ -1,0 +1,16 @@
+
+version: '2.1'
+services:
+  # data container provide plugins
+  base-sonarqube-plugins:
+    build: sonarqube-plugins
+    image: ${IMAGE_PREFIX:-cirepo}/sonarqube-plugins:${IMAGE_VERSION:-6.7.3-alpine}
+  base-sonarqube:
+    build: sonarqube
+    environment:
+    # mysql.local
+    - SONARQUBE_JDBC_URL=jdbc:mysql://${MARIADB_DOMAIN:-mysql}.${INFRASTRUCTURE:-local}:${MARIADB_PORT:-3306}/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
+    - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
+    - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
+    image: ${IMAGE_PREFIX:-cirepo}/sonarqube:${IMAGE_VERSION:-6.7.3-alpine}
+    restart: always
