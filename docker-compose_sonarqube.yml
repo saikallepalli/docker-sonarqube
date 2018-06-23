@@ -15,7 +15,10 @@ services:
       service: base-sonarqube
     container_name: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-internal}
     hostname: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-internal}
-    network_mode: bridge
+    networks:
+      local-network:
+        ipv4_address: 172.16.238.67
+        ipv6_address: 2001:3984:3989::67
     ports:
     - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
@@ -26,6 +29,17 @@ services:
     #- bundled-plugins:/opt/sonarqube/lib/bundled-plugins
     volumes_from:
     - sonarqube-plugins
+
+networks:
+  local-network:
+    external: true
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+      - subnet: 2001:3984:3989::/64
 
 volumes:
   data:
