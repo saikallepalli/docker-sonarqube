@@ -9,7 +9,7 @@ services:
     build: sonarqube
     environment:
     # mysql.local
-    - SONARQUBE_JDBC_URL=jdbc:mysql://${MYSQL_DOMAIN:-mysql}.${INFRASTRUCTURE:-local}:${MYSQL_PORT:-3306}/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance
+    - SONARQUBE_JDBC_URL=${SONARQUBE_JDBC_URL:-jdbc:mysql://mysql.local:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance}
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
     image: ${IMAGE_PREFIX:-cirepo}/sonarqube:${IMAGE_VERSION:-6.7.3-alpine}
