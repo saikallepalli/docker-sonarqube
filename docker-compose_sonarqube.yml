@@ -7,8 +7,6 @@ services:
       file: docker-compose-base.yml
       service: base-sonarqube-plugins
     container_name: ${INSTANCE_NAME:-sonarqube}-plugins.${INSTANCE_DOMAIN:-internal}
-    volumes:
-    - plugins:/opt/sonarqube/extensions/plugins
   sonarqube:
     extends:
       file: docker-compose-base.yml
@@ -47,10 +45,4 @@ volumes:
     driver_opts:
       type: none
       device: ${PWD}/data/data
-      o: bind
-  plugins:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}/data/plugins
       o: bind
