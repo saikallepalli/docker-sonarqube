@@ -1,6 +1,10 @@
 
 # sonarqube
 
+## Plugins
+
+see: http://www.sonarplugins.com/
+
 ## Usage
 
 Setup a database instance if not use embedded H2 database. 
@@ -48,6 +52,14 @@ EOSQL
 ```
 
 `psql -h postgresql.local -d sonar -U sonar -W`
+
+
+Enable organization support (not works)
+organizations feature is developed for SonarCloud and not support for SonarQube
+see: https://next.sonarqube.com/sonarqube/web_api/api/organizations/enable_support
+
+    curl -XPOST -u admin:admin "http://sonarqube.local:9000/api/organizations/enable_support"
+
 
 ## References
 
