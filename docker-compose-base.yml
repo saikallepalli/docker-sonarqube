@@ -4,7 +4,7 @@ services:
   # data container provide plugins
   base-sonarqube-plugins:
     build: sonarqube-plugins
-    image: ${IMAGE_PREFIX:-cirepo}/sonarqube-plugins:${IMAGE_VERSION:-6.7.3-alpine}
+    image: ${IMAGE_PREFIX:-cirepo}/sonarqube-plugins:${IMAGE_TAG:-6.7.3-alpine}
   base-sonarqube:
     build: sonarqube
     environment:
@@ -12,5 +12,5 @@ services:
     - SONARQUBE_JDBC_URL=${SONARQUBE_JDBC_URL:-jdbc:mysql://mysql.local:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance}
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
-    image: ${IMAGE_PREFIX:-cirepo}/sonarqube:${IMAGE_VERSION:-6.7.3-alpine}
+    image: ${IMAGE_PREFIX:-cirepo}/sonarqube:${IMAGE_TAG:-6.7.3-alpine}
     restart: always
