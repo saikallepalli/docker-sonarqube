@@ -11,17 +11,17 @@ Setup a database instance if not use embedded H2 database.
 
     docker-compose up -d
 
-  http://admin:admin@sonarqube.local:9000
+  http://admin:admin@sonarqube:9000
 
 Use with maven
 
   see: http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Maven
   
-    mvn sonar:sonar -Dsonar.host.url=http://sonarqube.local:9000
+    mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000
   
 Use Embedded H2 database
 
-    mvn sonar:sonar -Dsonar.host.url=http://sonarqube.local:9000 -Dsonar.jdbc.url="jdbc:h2:tcp://sonarqube.local/sonar"
+    mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.jdbc.url="jdbc:h2:tcp://sonarqube.local/sonar"
 
 Use Other database
 
@@ -58,7 +58,7 @@ Enable organization support (not works)
 organizations feature is developed for SonarCloud and not support for SonarQube
 see: https://next.sonarqube.com/sonarqube/web_api/api/organizations/enable_support
 
-    curl -XPOST -u admin:admin "http://sonarqube.local:9000/api/organizations/enable_support"
+    curl -XPOST -u admin:admin "http://sonarqube:9000/api/organizations/enable_support"
 
 
 ## References
