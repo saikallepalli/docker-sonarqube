@@ -6,13 +6,13 @@ services:
     extends:
       file: docker-compose-base.yml
       service: base-sonarqube-plugins
-    container_name: ${INSTANCE_NAME:-sonarqube}-plugins.${INSTANCE_DOMAIN:-internal}
+    container_name: ${CONTAINER_HOST_NAME:-sonarqube}-plugins
   sonarqube:
     extends:
       file: docker-compose-base.yml
       service: base-sonarqube
-    container_name: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-internal}
-    hostname: ${INSTANCE_NAME:-sonarqube}.${INSTANCE_DOMAIN:-internal}
+    container_name: ${CONTAINER_HOST_NAME:-sonarqube}
+    hostname: ${CONTAINER_HOST_NAME:-sonarqube}
     networks:
       local-network:
         ipv4_address: 172.16.238.67
