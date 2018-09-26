@@ -1,5 +1,5 @@
 
-FROM alpine:3.7
+FROM alpine:3.8
 
 ENV PLUGINS_DIR /opt/sonarqube/extensions/plugins
 
