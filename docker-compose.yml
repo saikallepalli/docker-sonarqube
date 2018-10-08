@@ -16,7 +16,7 @@ services:
     networks:
       local-network:
         ipv4_address: 172.16.238.67
-        ipv6_address: 2001:3984:3989::67
+        #ipv6_address: 2001:3984:3989::67
     ports:
     - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
     #- "9092:9092"
@@ -35,7 +35,7 @@ networks:
       driver: default
       config:
       - subnet: 172.16.238.0/24
-      - subnet: 2001:3984:3989::/64
+      #- subnet: 2001:3984:3989::/64
 
 volumes:
   data:
