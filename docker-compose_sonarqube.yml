@@ -6,20 +6,28 @@ services:
     extends:
       file: docker-compose-base.yml
       service: base-sonarqube-plugins
-    container_name: ${CONTAINER_HOST_NAME:-sonarqube}-plugins
+    container_name: ${CONTAINER_HOST_NAME:-standalone.sonarqube}-plugins
   sonarqube:
     extends:
       file: docker-compose-base.yml
       service: base-sonarqube
-    container_name: ${CONTAINER_HOST_NAME:-sonarqube}
-    hostname: ${CONTAINER_HOST_NAME:-sonarqube}
+    container_name: ${CONTAINER_HOST_NAME:-standalone.sonarqube}
+    hostname: ${CONTAINER_HOST_NAME:-standalone.sonarqube}
+    labels:
+      deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
+      deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
+      deploy.config.ref: ${LABEL_DEPLOY_CONFIG_REF:-unknown}
+      deploy.util.commit: ${LABEL_DEPLOY_UTIL_COMMIT:-unknown}
+      deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
+      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.sonarqube}
+      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/sonarqube/standalone}
     networks:
       local-network:
-        ipv4_address: 172.16.238.67
-        #ipv6_address: 2001:3984:3989::67
+        ipv4_address: ${IPV4_ADDRESS:-172.16.238.67}
+        #ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::67}
     ports:
-    - "${SONARQUBE_EXTERNAL_PORT:-9000}:${SONARQUBE_PORT:-9000}"
-    #- "9092:9092"
+    - "${EXTERNAL_SONARQUBE_9000_PORT:-9000}:9000"
+    #- "${EXTERNAL_SONARQUBE_9092_PORT:-9092}:9092"
     volumes:
     - data:/opt/sonarqube/data
     #- extensions-plugins:/opt/sonarqube/extensions/plugins # volumes_from: sonarqube-plugins
