@@ -1,17 +1,18 @@
-
 version: '2.1'
 services:
-  # data container provide plugins
-  base-sonarqube-plugins:
-    build: sonarqube-plugins
-    image: ${IMAGE_PREFIX:-cirepo/}sonarqube-plugins:${IMAGE_TAG:-6.7.3-alpine}
   base-sonarqube:
-    build: sonarqube
+    build:
+      args:
+      - IMAGE_ARG_IMAGE_PREFIX=${IMAGE_PREFIX:-cirepo/}
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${CONTAINER_HOST_NAME:-standalone.sonarqube}
     environment:
     # mysql56
     - SONARQUBE_JDBC_URL=${SONARQUBE_JDBC_URL:-jdbc:mysql://mysql56:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance}
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
+    hostname: ${CONTAINER_HOST_NAME:-standalone.sonarqube}
     image: ${IMAGE_PREFIX:-cirepo/}sonarqube:${IMAGE_TAG:-6.7.3-alpine}
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
