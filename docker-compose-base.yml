@@ -13,7 +13,7 @@ services:
     - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME:-sonar}
     - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD:-sonar}
     hostname: ${CONTAINER_HOST_NAME:-standalone.sonarqube}
-    image: ${IMAGE_PREFIX:-cirepo/}sonarqube:${IMAGE_TAG:-6.7.3-alpine}
+    image: ${IMAGE_PREFIX:-cirepo/}sonarqube:${IMAGE_TAG:-6.7.5-alpine}
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
